@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 
 const Message = () => {
     return (
-        <View>
+        <View style={{padding: 20, alignItems: 'center'}}>
             <Text>Message Page</Text>
         </View>
     )

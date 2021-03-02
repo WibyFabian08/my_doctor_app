@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 
 const Doctor = () => {
     return (
-        <View>
+        <View style={{padding: 20, alignItems: 'center'}}>
             <Text>Doctor Page</Text>
         </View>
     )
