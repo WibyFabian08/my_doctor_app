@@ -5,7 +5,7 @@ import {colors} from '../../../utils';
 const Link = (props) => {
     return (
         <TouchableOpacity>
-            <Text style={styles.label(props.size, props.align)}>{props.title}</Text>
+            <Text style={styles.label(props.size, props.align)} onPress={props.onPress}>{props.title}</Text>
         </TouchableOpacity>
     )
 }

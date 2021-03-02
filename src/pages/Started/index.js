@@ -2,6 +2,7 @@ import React from 'react';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {BgGetStarted, ILLogo} from '../../asstets';
 import {Button, Gap} from '../../components';
+import {fonts} from '../../utils';
 
 const Started = ({navigation}) => {
   return (
@@ -13,7 +14,7 @@ const Started = ({navigation}) => {
         </Text>
       </View>
       <View>
-        <Button title="Get Started" type="Get Started" onPress={() => navigation.navigate('Register')}></Button>
+        <Button title="Get Started" type="primary" onPress={() => navigation.navigate('Register')}></Button>
         <Gap height={16}></Gap>
         <Button title="Sign In" type="Sign In" onPress={() => navigation.navigate('Login')}></Button>
       </View>
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     maxWidth: 250,
     color: 'white',
-    fontFamily: 'Nunito-SemiBold'
+    fontFamily: fonts.primary[600]
   }
 });
 

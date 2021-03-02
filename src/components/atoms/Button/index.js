@@ -1,7 +1,17 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import IconOnly from './IconOnly';
+import {fonts} from '../../../utils';
 
 const Button = (props) => {
+  if(props.type === 'icon-only') {
+    return (
+      <TouchableOpacity>
+        <IconOnly icon={props.icon} onPress={props.onPress}></IconOnly>
+      </TouchableOpacity>
+    )
+  }
+
   return (
     <TouchableOpacity style={styles.container(props.type)} onPress={props.onPress}>
       <Text style={styles.label(props.type)}>{props.title}</Text>
@@ -11,15 +21,15 @@ const Button = (props) => {
 
 const styles = StyleSheet.create({
   container: (type) => ({
-    backgroundColor: type === 'Get Started' ? '#00CAD4' : 'white',
+    backgroundColor: type === 'primary' ? '#00CAD4' : 'white',
     borderRadius: 10,
   }),
   label: (type) => ({
-    color: type === 'Get Started' ? 'white' : 'black',
+    color: type === 'primary' ? 'white' : 'black',
     paddingVertical: 10,
     textAlign: 'center',
     fontSize: 20,
-    fontFamily: 'Nunito-SemiBold'
+    fontFamily: fonts.primary[600]
   }),
 });
 

@@ -2,14 +2,14 @@ import React from 'react';
 import { useEffect } from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {ILLogo} from '../../asstets';
-import {colors} from '../../utils';
+import {colors, fonts} from '../../utils';
 
 const Splash = ({navigation}) => {
 
     useEffect(() => {
         setTimeout(() => {
             navigation.replace('Started');
-        }, 10000)
+        }, 5000)
     }, [])
 
     return (
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         marginTop: 20,
-        fontFamily: 'Nunito-SemiBold',
+        fontFamily: fonts.primary[600],
         color: colors.text.primary
     },
     logo: {
