@@ -2,8 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import IconOnly from './IconOnly';
 import {fonts} from '../../../utils';
+import BtnSend from '../BtnSend';
 
 const Button = (props) => {
+  if(props.type === 'btn-send') {
+    return (
+      <BtnSend disable={props.disable} onPress={props.onPress}></BtnSend>
+    )
+  }
+
   if(props.type === 'icon-only') {
     return (
       <TouchableOpacity>

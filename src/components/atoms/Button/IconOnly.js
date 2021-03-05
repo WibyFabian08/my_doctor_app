@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ICBack } from '../../../asstets';
+import { ICBack, ICBackLight } from '../../../asstets';
 
 const IconOnly = (props) => {
 
@@ -11,7 +11,7 @@ const IconOnly = (props) => {
         }
 
         if(props.icon == 'back-light') {
-            return <Text>Light Back</Text>
+            return <ICBackLight></ICBackLight>
         }
 
         return <ICBack></ICBack>

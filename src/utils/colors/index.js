@@ -1,14 +1,17 @@
 const mainColors = {
     green1: '#0BCAD4',
+    green2: '#EDFCFD',
     dark1: '#112340',
     dark2: '#495A75',
     grey1: '#7D8797',
-    grey2: '#E9E9E9'
+    grey2: '#E9E9E9',
+    blue1: '#0066CB'
 };
 
 export const colors = {
     primary: mainColors.green1,
     secondary: mainColors.dark1,
+    tertiary: mainColors.blue1,
     white: 'white',
     black: 'black',
 
@@ -30,5 +33,6 @@ export const colors = {
         }
     },
 
-    border: mainColors.grey2
+    border: mainColors.grey2,
+    cardLight: mainColors.green2
 };
