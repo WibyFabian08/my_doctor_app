@@ -6,6 +6,9 @@ export const useForm = (initialValue) => {
   return [
     values,
     (formType, inputValue) => {
+        if(formType === 'reset') {
+          return setValues(initialValue);
+        }
         return setValues({
             ...values,
             [formType]: inputValue
