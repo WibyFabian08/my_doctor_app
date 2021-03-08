@@ -5,5 +5,6 @@ import Link from './Link';
 import TabItem from './TabItem';
 import ChatItem from './ChatItem';
 import InputChat from './InputChat';
+import Loading from './Loading';
 
-export {Button, Gap, Input, Link, TabItem, ChatItem, InputChat};
+export {Button, Gap, Input, Link, TabItem, ChatItem, InputChat, Loading};

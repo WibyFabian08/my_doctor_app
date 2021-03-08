@@ -1,11 +1,18 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {Header} from '../../components';
+import {View, StyleSheet, ScrollView, LogBox} from 'react-native';
+import {Header, Loading} from '../../components';
 import {Input, Button, Gap} from '../../components';
-import {useForm} from '../../utils';
-import Fire from '../../config/Fire';
+import {colors, useForm} from '../../utils';
+import {Fire} from '../../config';
+import {useState} from 'react/cjs/react.development';
+import {showMessage, hideMessage} from 'react-native-flash-message';
+import {storeData, getData} from '../../utils';
 
 const Register = ({navigation}) => {
+  LogBox.ignoreLogs(['Setting a timer']);
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const [form, setForm] = useForm({
     fullName: '',
     pekerjaan: '',
@@ -14,21 +21,41 @@ const Register = ({navigation}) => {
   });
 
   const submit = () => {
-    
+    setIsLoading(true);
+
     Fire.auth()
     .createUserWithEmailAndPassword(form.email, form.password)
-    .then((user) => {
-      console.log('Register Success : ', user)
+      .then((user) => {
+        console.log('Register Success');
+        setIsLoading(false);
+        setForm('reset');
+        const data = {
+          fullName: form.fullName,
+          pekerjaan: form.pekerjaan,
+          email: form.email,
+          uid: user.user.uid
+        }
+        // insert data ke database firebase
+        Fire.database()
+          .ref('users/' + user.user.uid + '/')
+          .set(data);
+          
+          // inser data ke localStorage
+          storeData('user', data);
+
+          navigation.navigate('UploadPhoto', data);
       })
       .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        
-        console.log(errorCode);
-        console.log(errorMessage);
+        const errorMessage = error.message;
+        setIsLoading(false);
+        setForm('reset');
+        showMessage({
+          message: errorMessage,
+          type: 'default',
+          backgroundColor: colors.error,
+          color: 'white',
+        });
       });
-
-    setForm('reset');
   };
 
   return (
@@ -65,6 +92,7 @@ const Register = ({navigation}) => {
             type="primary"
             onPress={() => submit()}></Button>
         </View>
+        {isLoading && <Loading></Loading>}
       </ScrollView>
     </View>
   );
