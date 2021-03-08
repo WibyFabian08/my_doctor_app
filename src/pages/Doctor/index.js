@@ -7,13 +7,14 @@ import {
   DoctorCategory,
   Gap,
 } from '../../components';
-import {colors, fonts} from '../../utils';
+import {colors, fonts, getData} from '../../utils';
 import {Doctor1, Doctor2, Doctor3} from '../../asstets';
 import {News1, News2, News3} from '../../asstets';
 import { useState } from 'react';
 import {JSONCategoryDoctor} from '../../asstets';
 
 const Doctor = ({navigation}) => {
+
   const [news, setNews] = useState([
     {
       id: 1,

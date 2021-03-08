@@ -6,7 +6,6 @@ import {colors, useForm} from '../../utils';
 import {Fire} from '../../config';
 import {useState} from 'react/cjs/react.development';
 import {showMessage, hideMessage} from 'react-native-flash-message';
-import {storeData, getData} from '../../utils';
 
 const Register = ({navigation}) => {
   LogBox.ignoreLogs(['Setting a timer']);
@@ -40,9 +39,6 @@ const Register = ({navigation}) => {
           .ref('users/' + user.user.uid + '/')
           .set(data);
           
-          // inser data ke localStorage
-          storeData('user', data);
-
           navigation.navigate('UploadPhoto', data);
       })
       .catch((error) => {
