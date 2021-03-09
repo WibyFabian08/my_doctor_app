@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Header, List, Profile} from '../../components';
-import {getData} from '../../utils';
+import {colors, getData} from '../../utils';
 import {UserPict} from '../../asstets';
+import { showMessage } from 'react-native-flash-message';
+import {Fire} from '../../config';
 
 const UserProfile = ({navigation}) => {
   const [profile, setProfile] = useState({
@@ -11,6 +13,16 @@ const UserProfile = ({navigation}) => {
     pekerjaan: '',
     photo: UserPict
   });
+
+  const signOut = () => {
+    Fire.auth().signOut()
+    .then(() => {
+      navigate.replace('Started')
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   useEffect(() => {
       getData('user')
@@ -23,7 +35,7 @@ const UserProfile = ({navigation}) => {
       .catch((err) => {
         console.log(err)
       })
-  }, [])
+  }, [profile])
 
   return (
     <View style={styles.container}>
@@ -48,9 +60,10 @@ const UserProfile = ({navigation}) => {
         type="next"
         icon="rate"></List>
       <List
-        name="Help Center"
-        message="Read Our Guidnes"
+        name="Sign Out"
+        message="Close Your Account"
         type="next"
+        onPress={() => signOut()}
         icon="help"></List>
     </View>
   );

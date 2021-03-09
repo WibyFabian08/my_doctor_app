@@ -23,7 +23,7 @@ const HomeProfile = (props) => {
           console.log(err)
         })
   
-    },[])
+    },[profileData])
     return (
         <TouchableOpacity style={styles.container} onPress={props.onPress}>
             <Image style={styles.gambar} source={profileData.photo}></Image>

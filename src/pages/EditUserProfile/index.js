@@ -7,7 +7,7 @@ import {getData, colors, storeData} from '../../utils';
 import {Fire} from '../../config';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {showMessage} from 'react-native-flash-message';
-import {Doctor1} from '../../asstets';
+import {ICPhotoNull} from '../../asstets';
 
 const EditUserProfile = ({navigation}) => {
   LogBox.ignoreLogs(['Setting a timer']);
@@ -16,10 +16,11 @@ const EditUserProfile = ({navigation}) => {
     fullName: '',
     email: '',
     pekerjaan: '',
+    photo: photo
   });
 
   const [photoForDB, setPhotoForDB] = useState('');
-  const [photo, setPhoto] = useState(Doctor1);
+  const [photo, setPhoto] = useState(ICPhotoNull);
 
   const [password, setPassword] = useState('');
 
@@ -79,24 +80,43 @@ const EditUserProfile = ({navigation}) => {
   };
 
   const updateProfile = () => {
-    const data = profile;
-    data.photo = photoForDB;
-    Fire.database()
-      .ref(`users/${profile.uid}/`)
-      .update(data)
-      .then(() => {
-        console.log('Update Success');
-        storeData('user', data);
-        showMessage({
-          message: 'Update Profile Berhasil',
-          type: 'default',
-          backgroundColor: colors.primary,
-          color: 'white',
+    if(photoForDB.length === 0) {
+      Fire.database()
+        .ref(`users/${profile.uid}/`)
+        .update(profile)
+        .then(() => {
+          console.log('Update Success');
+          storeData('user', profile);
+          showMessage({
+            message: 'Update Profile Berhasil',
+            type: 'default',
+            backgroundColor: colors.primary,
+            color: 'white',
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    } else {
+      const data = profile;
+      data.photo = photoForDB;
+      Fire.database()
+        .ref(`users/${profile.uid}/`)
+        .update(data)
+        .then(() => {
+          console.log('Update Success');
+          storeData('user', data);
+          showMessage({
+            message: 'Update Profile Berhasil',
+            type: 'default',
+            backgroundColor: colors.primary,
+            color: 'white',
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const updatePassword = () => {
