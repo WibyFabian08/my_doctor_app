@@ -1,17 +1,25 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {UserPict, ICRemove} from '../../../asstets';
+import {ICRemove} from '../../../asstets';
 import {fonts, colors} from '../../../utils';
 
 const Profile = (props) => {
   return (
     <View style={styles.profileWrapper}>
-      <TouchableOpacity onPress={props.onPress}>
-        <Image style={styles.poto} source={UserPict}></Image>
-        {
-          props.edit && <ICRemove style={styles.remove}></ICRemove>
-        }
-      </TouchableOpacity>
+      {
+        !props.edit && (
+          <View onPress={props.onPress}>
+            <Image style={styles.poto} source={props.photo}></Image>
+            {props.edit && <ICRemove style={styles.remove}></ICRemove>}
+          </View>
+        )
+      }
+      {props.edit && (
+        <TouchableOpacity onPress={props.onPress}>
+          <Image style={styles.poto} source={props.photo}></Image>
+          {props.edit && <ICRemove style={styles.remove}></ICRemove>}
+        </TouchableOpacity>
+      )}
       {props.name && (
         <View style={styles.desc}>
           <Text style={styles.name}>{props.name}</Text>

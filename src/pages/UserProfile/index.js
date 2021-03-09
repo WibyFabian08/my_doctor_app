@@ -1,13 +1,36 @@
-import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import {View, StyleSheet} from 'react-native';
 import {Header, List, Profile} from '../../components';
-import {colors, fonts} from '../../utils';
+import {getData} from '../../utils';
+import {UserPict} from '../../asstets';
 
 const UserProfile = ({navigation}) => {
+  const [profile, setProfile] = useState({
+    fullName: "",
+    pekerjaan: '',
+    photo: UserPict
+  });
+
+  useEffect(() => {
+      getData('user')
+      .then((result) => {
+        console.log('Result : ', result)
+        const data = result;
+        data.photo = {uri: result.photo}
+        setProfile(data);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
   return (
     <View style={styles.container}>
-      <Header title="Profile" onPress={() => navigation.goBack()}></Header>
-      <Profile name="Shayna Melinda" job="Product Designer"></Profile>
+      <Header title="Profile" icon='back-dark' onPress={() => navigation.goBack()}></Header>
+      {
+        profile.fullName.length > 0 && <Profile name={profile.fullName} job={profile.pekerjaan} photo={profile.photo}></Profile>
+      }
       <List
         name="Edit Profile"
         message="Last Updated Yesterday"

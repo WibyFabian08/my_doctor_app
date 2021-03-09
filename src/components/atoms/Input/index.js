@@ -25,7 +25,9 @@ const Input = (props) => {
         onBlur={() => onBlurForm()}
         secureTextEntry={props.secureTextEntry}
         value={props.value}
-        onChangeText={props.onChangeText}></TextInput>
+        onChangeText={props.onChangeText}
+        editable={props.editable}
+        selectTextOnFocus={props.selectTextOnFocus}></TextInput>
     </View>
   );
 };
