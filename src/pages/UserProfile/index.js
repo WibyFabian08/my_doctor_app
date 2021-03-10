@@ -2,32 +2,31 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Header, List, Profile} from '../../components';
-import {colors, getData} from '../../utils';
-import {UserPict} from '../../asstets';
-import { showMessage } from 'react-native-flash-message';
+import {getData} from '../../utils';
+import {ICPhotoNull} from '../../asstets';
 import {Fire} from '../../config';
 
 const UserProfile = ({navigation}) => {
   const [profile, setProfile] = useState({
     fullName: "",
     pekerjaan: '',
-    photo: UserPict
+    photo: ICPhotoNull
   });
+
 
   const signOut = () => {
     Fire.auth().signOut()
     .then(() => {
-      navigate.replace('Started')
+      navigation.replace('Started')
     })
     .catch((err) => {
       console.log(err)
     })
   }
-
+  
   useEffect(() => {
       getData('user')
       .then((result) => {
-        console.log('Result : ', result)
         const data = result;
         data.photo = {uri: result.photo}
         setProfile(data);
@@ -35,7 +34,7 @@ const UserProfile = ({navigation}) => {
       .catch((err) => {
         console.log(err)
       })
-  }, [profile])
+  }, [])
 
   return (
     <View style={styles.container}>

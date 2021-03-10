@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {UserPict} from '../../../asstets';
+import {ICPhotoNull} from '../../../asstets';
 import { colors, fonts } from '../../../utils';
 import { Gap } from '../../atoms';
 import {getData} from '../../../utils';
@@ -8,7 +8,7 @@ import {getData} from '../../../utils';
 const HomeProfile = (props) => {
     const [profileData, setProfileData] = useState({
         fullName: '',
-        photo: UserPict,
+        photo: ICPhotoNull,
         pekerjaan: ''
     })
 
@@ -23,7 +23,8 @@ const HomeProfile = (props) => {
           console.log(err)
         })
   
-    },[profileData])
+    },[])
+    
     return (
         <TouchableOpacity style={styles.container} onPress={props.onPress}>
             <Image style={styles.gambar} source={profileData.photo}></Image>

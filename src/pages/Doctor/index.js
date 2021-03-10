@@ -10,31 +10,30 @@ import {
 import {colors, fonts, getData} from '../../utils';
 import {Doctor1, Doctor2, Doctor3} from '../../asstets';
 import {News1, News2, News3} from '../../asstets';
-import { useState } from 'react';
+import {useState} from 'react';
 import {JSONCategoryDoctor} from '../../asstets';
 
 const Doctor = ({navigation}) => {
-
   const [news, setNews] = useState([
     {
       id: 1,
       title: 'Is it safe to stay at home during coronavirus?',
       time: 'today',
-      image: <News1></News1>
+      image: <News1></News1>,
     },
     {
       id: 2,
       title: 'Consume yellow citrus helps you healthier',
       time: 'today',
-      image: <News2></News2>
+      image: <News2></News2>,
     },
     {
       id: 3,
       title: 'Learn how to make a proper oange juice at home',
       time: 'today',
-      image: <News3></News3>
-    }
-  ])
+      image: <News3></News3>,
+    },
+  ]);
 
   return (
     <View style={styles.container}>
@@ -42,7 +41,8 @@ const Doctor = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Gap height={30}></Gap>
           <View style={styles.wrapperSection}>
-            <HomeProfile onPress={() => navigation.navigate('UserProfile')}></HomeProfile>
+            <HomeProfile
+              onPress={() => navigation.navigate('UserProfile')}></HomeProfile>
             <Gap height={30}></Gap>
             <Text style={styles.title}>
               Mau konsultasi degan siapa hari ini?
@@ -52,11 +52,12 @@ const Doctor = ({navigation}) => {
           <View style={styles.doctorCategory}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <Gap width={16}></Gap>
-              {
-                JSONCategoryDoctor.data.map((item) => (
-                  <DoctorCategory onPress={() => navigation.navigate('ChooseDoctor')} key={item.id} category={item.category}></DoctorCategory>
-                ))
-              }
+              {JSONCategoryDoctor.data.map((item) => (
+                <DoctorCategory
+                  onPress={() => navigation.navigate('ChooseDoctor')}
+                  key={item.id}
+                  category={item.category}></DoctorCategory>
+              ))}
               <Gap width={6}></Gap>
             </ScrollView>
           </View>
@@ -88,11 +89,14 @@ const Doctor = ({navigation}) => {
             <Text style={styles.ratedDoctor}>Good News</Text>
           </View>
           <Gap height={16}></Gap>
-          {
-            news.map((news) => (
-              <NewsItem key={news.id} title={news.title} time={news.time} image={news.image} onPress={() => alert('News Not Ready Yet')}></NewsItem>
-            ))
-          }
+          {news.map((news) => (
+            <NewsItem
+              key={news.id}
+              title={news.title}
+              time={news.time}
+              image={news.image}
+              onPress={() => alert('News Not Ready Yet')}></NewsItem>
+          ))}
           <Gap height={30}></Gap>
         </ScrollView>
       </View>

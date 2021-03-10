@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useEffect} from 'react';
-import {View, Text, StyleSheet, LogBox} from 'react-native';
+import {View, StyleSheet, LogBox} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Header, Profile, Input, Button, Gap} from '../../components';
 import {getData, colors, storeData} from '../../utils';
@@ -8,6 +8,7 @@ import {Fire} from '../../config';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {showMessage} from 'react-native-flash-message';
 import {ICPhotoNull} from '../../asstets';
+import {showError, showSuccess} from '../../utils';
 
 const EditUserProfile = ({navigation}) => {
   LogBox.ignoreLogs(['Setting a timer']);
@@ -16,7 +17,7 @@ const EditUserProfile = ({navigation}) => {
     fullName: '',
     email: '',
     pekerjaan: '',
-    photo: photo
+    photo: photo,
   });
 
   const [photoForDB, setPhotoForDB] = useState('');
@@ -35,23 +36,12 @@ const EditUserProfile = ({navigation}) => {
     launchImageLibrary(
       {includeBase64: true, quality: 0.5, maxWidth: 200, maxHeight: 200},
       (response) => {
-        console.log('get data : ', response);
         const source = {uri: response.uri};
 
         if (response.didCancel || response.error) {
-          showMessage({
-            message: 'Upload Photo Gagal',
-            type: 'default',
-            backgroundColor: colors.error,
-            color: 'white',
-          });
+          showError('Upload Photo Gagal');
         } else {
-          showMessage({
-            message: 'Upload Photo Berhasil',
-            type: 'default',
-            backgroundColor: colors.primary,
-            color: 'white',
-          });
+          showSuccess('Upload Photo Berhasil');
           setPhotoForDB(`data:${response.type};base64, ${response.base64}`);
           setPhoto(source);
         }
@@ -62,12 +52,7 @@ const EditUserProfile = ({navigation}) => {
   const update = () => {
     if (password.length > 0) {
       if (password.length < 6) {
-        showMessage({
-          message: 'Password Kurang Dari 6 Karakter',
-          type: 'default',
-          backgroundColor: colors.error,
-          color: 'white',
-        });
+        showError('Password Kurang Dari 6 Karakter');
       } else {
         updatePassword();
         updateProfile();
@@ -80,19 +65,13 @@ const EditUserProfile = ({navigation}) => {
   };
 
   const updateProfile = () => {
-    if(photoForDB.length === 0) {
+    if (photoForDB.length === 0) {
       Fire.database()
         .ref(`users/${profile.uid}/`)
         .update(profile)
         .then(() => {
-          console.log('Update Success');
           storeData('user', profile);
-          showMessage({
-            message: 'Update Profile Berhasil',
-            type: 'default',
-            backgroundColor: colors.primary,
-            color: 'white',
-          });
+          showSuccess('Update Profile Berhasil')
         })
         .catch((err) => {
           console.log(err);
@@ -104,14 +83,8 @@ const EditUserProfile = ({navigation}) => {
         .ref(`users/${profile.uid}/`)
         .update(data)
         .then(() => {
-          console.log('Update Success');
           storeData('user', data);
-          showMessage({
-            message: 'Update Profile Berhasil',
-            type: 'default',
-            backgroundColor: colors.primary,
-            color: 'white',
-          });
+          showSuccess('Upload Profile Berhasil')
         })
         .catch((err) => {
           console.log(err);

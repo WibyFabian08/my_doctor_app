@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import {Header, Button, Link, Gap, Loading} from '../../components';
+import {Header, Button, Link, Gap} from '../../components';
 import {ICPhotoNull, ICAdd, ICRemove} from '../../asstets';
 import {colors, fonts} from '../../utils';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -10,18 +10,15 @@ import {Fire} from '../../config';
 import {storeData} from '../../utils';
 
 const UploadPhoto = ({navigation, route}) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [hasPhoto, setHasPhoto] = useState(false);
   const [photo, setPhoto] = useState(ICPhotoNull);
   const [photoForDB, setPhotoForDB] = useState('');
-
   const {fullName, pekerjaan, uid} = route.params;
 
   const getImage = () => {
     launchImageLibrary(
       {includeBase64: true, quality: 0.5, maxWidth: 200, maxHeight: 200},
       (response) => {
-        console.log('get data : ', response);
         const source = {uri: response.uri};
 
         if (response.didCancel || response.error) {
@@ -55,8 +52,6 @@ const UploadPhoto = ({navigation, route}) => {
 
     const data = route.params;
     (data.photo = photoForDB), storeData('user', data);
-
-    setIsLoading(true);
 
     navigation.navigate('MainApp');
   };
@@ -100,7 +95,6 @@ const UploadPhoto = ({navigation, route}) => {
           </View>
         </View>
       </View>
-      {isLoading && <Loading></Loading>}
     </View>
   );
 };
