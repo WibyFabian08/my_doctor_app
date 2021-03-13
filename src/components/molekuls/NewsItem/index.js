@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors, fonts } from '../../../utils';
 import { Gap } from '../../atoms';
 
@@ -9,11 +9,9 @@ const NewsItem = (props) => {
         <View style={styles.desc}>
             <Text style={styles.title}>{props.title}</Text>
             <Gap height={4}></Gap>
-            <Text style={styles.time}>{props.time}</Text>
+            <Text style={styles.time}>{props.date}</Text>
         </View>
-        <View>
-            {props.image}
-        </View>
+        <Image source={{uri: props.image}} style={styles.image}></Image>
       <Gap height={12}></Gap>
     </TouchableOpacity>
   );
@@ -41,6 +39,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontFamily: fonts.primary[600],
         color: colors.text.secondary
+    },
+    image: {
+        width: 90,
+        borderRadius: 10
     }
 })
 

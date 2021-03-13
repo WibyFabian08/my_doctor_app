@@ -1,12 +1,10 @@
 import React from 'react';
-import {LogBox, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {showMessage} from 'react-native-flash-message';
-import {useDispatch} from 'react-redux';
-import {ILLogo} from '../../asstets';
-import {Button, Gap, Input, Link} from '../../components';
-import {Fire} from '../../config';
-import {colors, fonts, storeData, useForm} from '../../utils';
-import {showError} from '../../utils';
+import { LogBox, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { ILLogo } from '../../asstets';
+import { Button, Gap, Input, Link } from '../../components';
+import { Fire } from '../../config';
+import { fonts, showError, storeData, useForm } from '../../utils';
 
 const Login = ({navigation}) => {
   LogBox.ignoreLogs(['Setting a timer']);
