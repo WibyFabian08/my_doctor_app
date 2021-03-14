@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fonts.primary[600],
     color: colors.text.secondary,
+    textTransform: 'capitalize'
   },
   remove: {
     position: 'absolute',

@@ -6,13 +6,8 @@ import {getData} from '../../utils';
 import {ICPhotoNull} from '../../asstets';
 import {Fire} from '../../config';
 
-const UserProfile = ({navigation}) => {
-  const [profile, setProfile] = useState({
-    fullName: "",
-    pekerjaan: '',
-    photo: ICPhotoNull
-  });
-
+const UserProfile = ({navigation, route}) => {
+  const data = route.params;
 
   const signOut = () => {
     Fire.auth().signOut()
@@ -24,23 +19,11 @@ const UserProfile = ({navigation}) => {
     })
   }
   
-  useEffect(() => {
-      getData('user')
-      .then((result) => {
-        const data = result;
-        data.photo = {uri: result.photo}
-        setProfile(data);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
-
   return (
     <View style={styles.container}>
       <Header title="Profile" icon='back-dark' onPress={() => navigation.goBack()}></Header>
       {
-        profile.fullName.length > 0 && <Profile name={profile.fullName} job={profile.pekerjaan} photo={profile.photo}></Profile>
+        data.fullName.length > 0 && <Profile name={data.fullName} job={data.pekerjaan} photo={data.photo}></Profile>
       }
       <List
         name="Edit Profile"

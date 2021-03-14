@@ -9,7 +9,7 @@ const Header = (props) => {
 
   if(props.type === 'dark-profile') {
     return (
-      <DarkProfile onPress={props.onPress} nama={props.nama} category={props.category}></DarkProfile>
+      <DarkProfile onPress={props.onPress} nama={props.nama} category={props.category} photo={props.photo}></DarkProfile>
     )
   }
 

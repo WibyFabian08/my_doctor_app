@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import {PotoProfile, ICFemale} from '../../asstets';
-import {Header, ProfileItem, Button, Gap, Profile} from '../../components';
-import {colors, fonts} from '../../utils';
+import { StyleSheet, View } from 'react-native';
+import { Button, Gap, Header, Profile, ProfileItem } from '../../components';
+import { colors, fonts } from '../../utils';
 
-const ProfileDoctor = ({navigation}) => {
+const ProfileDoctor = ({navigation, route}) => {
+  const data = route.params;
   return (
     <View>
       <Header
@@ -12,20 +12,20 @@ const ProfileDoctor = ({navigation}) => {
         icon="back-dark"
         onPress={() => navigation.goBack()}></Header>
       <View style={styles.container}>
-        <Profile name="Naerobi Putri Hayza" job="Dokter Anak"></Profile>
+        <Profile name={data.data.fullName} job={data.data.category} photo={{uri: data.data.photo}}></Profile>
         <ProfileItem
           label="Alumnus"
-          value="Universitas Indonesia, 2020"></ProfileItem>
+          value={data.data.university}></ProfileItem>
         <ProfileItem
           label="Tempat Praktik"
-          value="Rumah Sakit Umum, Bandung"></ProfileItem>
-        <ProfileItem label="No. STR" value="0000116622081996"></ProfileItem>
+          value={data.data.hospital_address}></ProfileItem>
+        <ProfileItem label="No. STR" value={data.data.str_number}></ProfileItem>
         <Gap height={39}></Gap>
         <View style={styles.content}>
           <Button
             title="Start Consultation"
             type="primary"
-            onPress={() => navigation.navigate('Chatting')}></Button>
+            onPress={() => navigation.navigate('Chatting', data)}></Button>
         </View>
       </View>
     </View>

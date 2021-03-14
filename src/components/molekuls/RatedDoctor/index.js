@@ -10,7 +10,7 @@ const RatedDoctor = (props) => {
     <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <View style={styles.bioWrapper}>
         <View>
-          <Image source={props.image}></Image>
+          <Image style={styles.poto} source={props.image}></Image>
         </View>
         <Gap width={10}></Gap>
         <View>
@@ -51,12 +51,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.primary[600],
     color: colors.text.primary,
+    textTransform: 'capitalize'
   },
   job: {
     fontSize: 12,
     fontFamily: fonts.primary[600],
     color: colors.text.secondary,
+    textTransform: 'capitalize'
   },
+  poto: {
+    width: 40,
+    height: 40,
+    borderRadius: 20
+  }
 });
 
 export default RatedDoctor;

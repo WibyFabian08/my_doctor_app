@@ -12,7 +12,7 @@ const DarkProfile = (props) => {
                 <Text style={styles.name}>{props.nama}</Text>
                 <Text style={styles.category}>{props.category}</Text>
             </View>
-            <Image source={Doctor1}></Image>
+            <Image style={styles.image} source={{uri: props.photo}}></Image>
         </View>
     )
 }
@@ -40,7 +40,13 @@ const styles = StyleSheet.create({
     },
     category: {
         fontSize: 12,
-        color: colors.text.secondary
+        color: colors.text.secondary,
+        textTransform: 'capitalize'
+    },
+    image: {
+        width: 40,
+        height: 40,
+        borderRadius: 20
     }
 })
 
