@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: fonts.primary[600],
     fontSize: 20,
-    color: type === 'dark' ? colors.white : colors.text.primary
+    color: type === 'dark' ? colors.white : colors.text.primary,
+    textTransform: 'capitalize'
   }),
 });
 

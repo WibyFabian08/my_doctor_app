@@ -1,45 +1,71 @@
-import React from 'react';
-import {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {List} from '../../components';
-import {colors, fonts} from '../../utils';
-import {Doctor1, Doctor2, Doctor3} from '../../asstets';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { List } from '../../components';
+import { Fire } from '../../config';
+import { colors, fonts, getData } from '../../utils';
 
 const Message = ({navigation}) => {
-  const [doctors, setDoctors] = useState([
-    {
-      id: 1,
-      name: 'Alexander Jennie',
-      message: 'Baik bu, terimakasih banyak atas wakt...',
-      image: Doctor1,
-    },
-    {
-      id: 2,
-      name: 'Naerobi Putri hayza',
-      message: 'Oh tentu saja tidak karena jeruk it...',
-      image: Doctor2,
-    },
-    {
-      id: 3,
-      name: 'John McParker Steve',
-      message: 'Oke menurut pak doker bagaimana unt...',
-      image: Doctor3,
-    },
-  ]);
+
+  const [user, setUser] = useState({});
+  const [historyChat, setHistoryChat] = useState([]);
+
+  useEffect(() => {
+      getUserLocal();
+
+      const rootDB = Fire.database().ref();
+      const url = `messages/${user.uid}/`
+      const messageDB = rootDB.child(url);
+
+      messageDB.on('value', async snapshot => {
+        if(snapshot.val()) {
+          const oldData = snapshot.val();
+          const data = [];
+  
+          const promises = await Object.keys(oldData).map(async (chatHistory) => {
+            const urlDoctor = `doctors/${oldData[chatHistory].uidPartner}`;
+            const detailDoctor = await rootDB.child(urlDoctor).once('value');
+            
+            data.push({
+              id: chatHistory,
+              detailDoctor: detailDoctor.val(),
+              data: oldData[chatHistory]
+            })
+          })
+          
+          await Promise.all(promises)
+
+          setHistoryChat(data)
+        }
+      })
+  }, [user.uid])
+
+  const getUserLocal = () => {
+    getData('user').then((result) => {
+      setUser(result);
+    })
+  }
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.textWrapper}>
           <Text style={styles.text}>Messages</Text>
         </View>
-        {doctors.map((doctor) => (
-          <List
-            key={doctor.id}
-            name={doctor.name}
-            message={doctor.message}
-            image={doctor.image}
-            onPress={() => navigation.navigate('Chatting')}></List>
-        ))}
+        {
+          historyChat.map((data) => {
+            const profileDoctor = {
+              id: data.detailDoctor.uid,
+              data: data.detailDoctor
+            }
+            return (
+              <List
+                key={data.id}
+                name={data.detailDoctor.fullName}
+                message={data.data.lastContentChat}
+                image={{uri: data.detailDoctor.photo}}
+                onPress={() => navigation.navigate('Chatting', profileDoctor)}></List>
+            )
+          })
+        }
       </View>
     </View>
   );

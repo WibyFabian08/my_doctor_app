@@ -110,7 +110,7 @@ const Doctor = ({navigation}) => {
               <Gap width={16}></Gap>
               {categoryDoc.map((item) => (
                 <DoctorCategory
-                  onPress={() => navigation.navigate('ChooseDoctor')}
+                  onPress={() => navigation.navigate('ChooseDoctor', item)}
                   key={item.id}
                   category={item.category}></DoctorCategory>
               ))}
@@ -123,7 +123,7 @@ const Doctor = ({navigation}) => {
             {topRatedDoctor.map((doctor) => {
               return (
                 <RatedDoctor
-                  key={doctor.data.id}
+                  key={doctor.id}
                   image={{uri: doctor.data.photo}}
                   name={doctor.data.fullName}
                   job={doctor.data.category}

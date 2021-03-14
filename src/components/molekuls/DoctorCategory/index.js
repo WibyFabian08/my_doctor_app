@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
   },
   need: {
     fontSize: 12,
-    color: colors.text.primary
+    color: colors.text.primary,
+    textTransform: 'capitalize'
   }
 });
 

@@ -56,11 +56,9 @@ const EditUserProfile = ({navigation}) => {
       } else {
         updatePassword();
         updateProfile();
-        navigation.replace('MainApp');
       }
     } else {
       updateProfile();
-      navigation.replace('MainApp');
     }
   };
 
@@ -70,8 +68,9 @@ const EditUserProfile = ({navigation}) => {
         .ref(`users/${profile.uid}/`)
         .update(profile)
         .then(() => {
-          storeData('user', profile);
-          showSuccess('Update Profile Berhasil')
+          storeData('user', profile).then(() => {
+            navigation.replace('MainApp');      
+          })
         })
         .catch((err) => {
           console.log(err);
@@ -83,8 +82,9 @@ const EditUserProfile = ({navigation}) => {
         .ref(`users/${profile.uid}/`)
         .update(data)
         .then(() => {
-          storeData('user', data);
-          showSuccess('Upload Profile Berhasil')
+          storeData('user', data).then(() => {
+            navigation.replace('MainApp');
+          })
         })
         .catch((err) => {
           console.log(err);

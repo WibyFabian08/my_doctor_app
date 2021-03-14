@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Header, ChatItem, InputChat} from '../../components';
 import {colors, fonts, getChatTime, getData, setDateChat} from '../../utils';
@@ -6,14 +6,16 @@ import {Fire} from '../../config';
 import {useEffect} from 'react';
 
 const Chatting = ({navigation, route}) => {
-  const [chatContent, setChatContent] = useState('');
+  const scrollViewRef = useRef();
   const profileDoctor = route.params;
+  const [chatContent, setChatContent] = useState('');
   const [dataUser, setDataUser] = useState({});
   const [dataChat, setDataChat] = useState([]);
 
   useEffect(() => {
     getDataUSerLocal();
 
+    // get data chatting dari firebase
     const chatID = `${dataUser.uid}_${profileDoctor.data.uid}`;
     const urlFirebase = `chatting/${chatID}/allChat`;
 
@@ -44,7 +46,7 @@ const Chatting = ({navigation, route}) => {
           setDataChat(allDataChat);
         }
       });
-  }, []);
+  }, [dataUser.uid, profileDoctor.data.uid]);
 
   const getDataUSerLocal = () => {
     getData('user')
@@ -69,12 +71,31 @@ const Chatting = ({navigation, route}) => {
     const chatID = `${dataUser.uid}_${profileDoctor.data.uid}`;
 
     const urlFirebase = `chatting/${chatID}/allChat/${setDateChat(today)}`;
+    const urlMessageUser = `messages/${dataUser.uid}/${chatID}`;
+    const urlMessageDocter = `messages/${profileDoctor.data.uid}/${chatID}`;
+
+    const dataMessageUser = {
+      lastContentChat: chatContent,
+      lastChatDate: data.chatDate,
+      uidPartner: profileDoctor.data.uid,
+    };
+
+    const dataMessageDoctor = {
+      lastContentChat: chatContent,
+      lastChatDate: data.chatDate,
+      uidPartner: dataUser.uid,
+    };
 
     Fire.database()
       .ref(urlFirebase)
       .push(data)
       .then(() => {
         setChatContent('');
+        // hostory message for user
+        Fire.database().ref(urlMessageUser).set(dataMessageUser);
+
+        // history message for doctor
+        Fire.database().ref(urlMessageDocter).set(dataMessageDoctor);
       })
       .catch((err) => {
         console.log(err);
@@ -92,11 +113,13 @@ const Chatting = ({navigation, route}) => {
         category={profileDoctor.data.profession}
         photo={profileDoctor.data.photo}></Header>
       <View style={styles.content}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false} ref={scrollViewRef}
+          onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}>
           {dataChat.map((chat) => {
             return (
-              <View>
-                <Text style={styles.date} key={chat.id}>
+              <View key={chat.id}>
+                <Text style={styles.date} >
                   {chat.id}
                 </Text>
                 {chat.data.map((itemChat) => {

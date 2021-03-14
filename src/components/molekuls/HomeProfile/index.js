@@ -1,9 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {ICPhotoNull} from '../../../asstets';
-import {colors, fonts} from '../../../utils';
-import {Gap} from '../../atoms';
-import {getData} from '../../../utils';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { colors, fonts } from '../../../utils';
+import { Gap } from '../../atoms';
 
 const HomeProfile = (props) => {
   return (
