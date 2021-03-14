@@ -123,6 +123,7 @@ const Doctor = ({navigation}) => {
             {topRatedDoctor.map((doctor) => {
               return (
                 <RatedDoctor
+                  key={doctor.data.id}
                   image={{uri: doctor.data.photo}}
                   name={doctor.data.fullName}
                   job={doctor.data.category}

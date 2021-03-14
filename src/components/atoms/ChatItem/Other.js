@@ -3,16 +3,16 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import { colors, fonts } from '../../../utils';
 import {Doctor1} from '../../../asstets';
 
-const IsMe = () => {
+const IsMe = (props) => {
   return (
     <View style={styles.container}>
-        <Image style={styles.image} source={Doctor1}></Image>
+        <Image style={styles.image} source={{uri: props.photo}}></Image>
         <View>
             <View>
-                <Text style={styles.message}>Ibu dokter, apakah memakan jeruk tiap hari itu buruk?
+                <Text style={styles.message}>{props.isiChat}
                 </Text>
             </View>
-        <Text style={styles.date}>4.20 AM</Text>
+        <Text style={styles.date}>{props.waktuChat}</Text>
         </View>
     </View>
   );
@@ -22,14 +22,15 @@ const styles = StyleSheet.create({
     container: {
         marginBottom: 20,
         alignItems: 'flex-end',
-        paddingRight: 16,
+        paddingLeft: 8,
         flexDirection: 'row'
     },
     image: {
         width: 30,
         height: 30,
         borderRadius: 15,
-        marginRight: 12,
+        marginRight: 8,
+        marginLeft: 8
     },  
     message: {
         fontSize: 14,
